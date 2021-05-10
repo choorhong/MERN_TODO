@@ -8,6 +8,7 @@ export const getTasks = async(req: Request, res: Response, next: NextFunction) =
 }
 
 export const postTask = async (req: Request, res: Response, next: NextFunction) => {
+    console.log(`req.body`)
     const content = new Task({
         text: req.body.text,
         creator: new mongoose.mongo.ObjectID('6093e6a872228b2dc190b595')
