@@ -44,7 +44,7 @@ const Dashboard = () => {
     >
       <InputForm getTasks={getTasks} />
 
-      <Tasks dataSource={tasks} />
+      <Tasks dataSource={tasks} getTasks={getTasks} />
 
     </div>
   )

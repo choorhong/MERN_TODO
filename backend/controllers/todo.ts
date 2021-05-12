@@ -16,12 +16,16 @@ export const postTask = async (req: Request, res: Response, next: NextFunction) 
     return res.status(201).json({message: 'Task created successfully', task: result})
 }
 
-export const putTask = (req: Request, res: Response, next: NextFunction) => {
-    const todoId = req.params.todoId
-    return res.status(200).json({route: `/todo/${todoId}`, page: 'Individual Task', method: 'put'})
+export const putTask = async (req: Request, res: Response, next: NextFunction) => {
+    const todoId = new mongoose.mongo.ObjectID(req.params.todoId)
+    await Task.updateOne({ _id: todoId }, { $set: { text: req.body.text } });
+    return res.status(200).json({message: 'Task updated successfully'})
 }
 
-export const deleteTask = (req: Request, res: Response, next: NextFunction) => {
+export const deleteTask = async(req: Request, res: Response, next: NextFunction) => {
     const todoId = req.params.todoId
-    return res.status(200).json({route: `/todo/${todoId}`, page: 'Delete a Task', method: 'delete'})
+    const tasks = await Task.findByIdAndRemove(todoId)
+
+    res.status(200).json({ message: 'Task deleted successfully.' });
+
 }

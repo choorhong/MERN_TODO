@@ -7,6 +7,11 @@ const cors = (req: Request, res: Response, next: NextFunction) => {
       'OPTIONS, GET, POST, PUT, PATCH, DELETE'
     );
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200)
+    }
+    
     next();
 }
 
