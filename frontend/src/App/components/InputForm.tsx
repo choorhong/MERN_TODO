@@ -27,16 +27,17 @@ const InputForm = (props: InputFormInterface) => {
     []
   )
 
-  const handleSubmit = async () => {
-    const values = form.getFieldsValue()
-    const result = await postTask(values)
-    if (result && result.statusText === 'Created') {
-      props.getTasks()
-      form.setFieldsValue({
-        task: undefined
-      })
-    }
-  }
+  const handleSubmit = useCallback(
+    async () => {
+      const values = form.getFieldsValue()
+      const result = await postTask(values)
+      if (result && result.statusText === 'Created') {
+        props.getTasks()
+        form.setFieldsValue({
+          task: undefined
+        })
+      }
+    }, [form, postTask, props])
 
   return (
     <Form

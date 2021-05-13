@@ -1,14 +1,30 @@
 import React from 'react'
 import './App.css'
-import Header from './header'
+import ContextProvider from './App/hooks/context'
 import Dashboard from './App/pages/dashboard'
+import Header from './header'
+import Setting from './App/pages/setting'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 function App () {
   return (
-    <>
-      <Header />
-      <Dashboard />
-    </>
+    <BrowserRouter>
+      <ContextProvider>
+        <Header />
+        <div
+          style={{ padding: '5% 5%' }}
+        >
+          <Switch>
+            <Route path='/setting'>
+              <Setting />
+            </Route>
+            <Route path='/'>
+              <Dashboard />
+            </Route>
+          </Switch>
+        </div>
+      </ContextProvider>
+    </BrowserRouter>
   )
 }
 

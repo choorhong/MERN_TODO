@@ -1,7 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import axios from 'axios'
 import { Form, List, Button, Input } from 'antd'
 import { EditOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
+
+import { Context } from '../hooks/context'
 
 interface TasksPropsInterface {
     dataSource: [{
@@ -16,6 +18,8 @@ interface TasksPropsInterface {
 
 const Tasks = (props: TasksPropsInterface) => {
   const { dataSource, getTasks } = props
+
+  const { context } = useContext(Context)
 
   const [form] = Form.useForm()
   const [editId, setEditId] = useState()
@@ -79,7 +83,7 @@ const Tasks = (props: TasksPropsInterface) => {
         onChange: page => {
           console.log(page)
         },
-        pageSize: 10
+        pageSize: context.numOfItemsToBeShown
       }}
       dataSource={dataSource}
       renderItem={item => {
@@ -138,4 +142,3 @@ const Tasks = (props: TasksPropsInterface) => {
 }
 
 export default Tasks
-//   <pre>{JSON.stringify(tasks, null, 2)}</pre>

@@ -39,14 +39,11 @@ const Dashboard = () => {
   }, [getTasks])
 
   return (
-    <div
-      style={{ padding: '5% 5%' }}
-    >
+    <>
       <InputForm getTasks={getTasks} />
-
       <Tasks dataSource={tasks} getTasks={getTasks} />
 
-    </div>
+    </>
   )
 }
 
