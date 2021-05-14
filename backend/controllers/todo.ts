@@ -17,9 +17,8 @@ export const postTask = async (req: Request, res: Response, next: NextFunction) 
 }
 
 export const putTask = async (req: Request, res: Response, next: NextFunction) => {
-    const todoId = new mongoose.mongo.ObjectID(req.params.todoId)
-    await Task.updateOne({ _id: todoId }, { $set: { text: req.body.text } });
-    return res.status(200).json({message: 'Task updated successfully'})
+    const result = await Task.findByIdAndUpdate(req.params.todoId, { text: req.body.text}, { new: true })
+    return res.status(200).json({message: 'Task updated successfully', task: result})
 }
 
 export const deleteTask = async(req: Request, res: Response, next: NextFunction) => {
