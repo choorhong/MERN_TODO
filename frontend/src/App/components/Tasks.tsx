@@ -4,6 +4,7 @@ import { Form, List, Button, Input } from 'antd'
 import { EditOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
 import { Context } from '../hooks/context'
+import { putTaskMutation, deleteTaskMutation } from '../graphql/mutation'
 
 interface TasksPropsInterface {
     dataSource: [{
@@ -33,20 +34,38 @@ const Tasks = (props: TasksPropsInterface) => {
   )
 
   const handleUpdate = useCallback(
-    async (id) => {
+    async (id: string) => {
       const value = form.getFieldValue('task')
       console.log('value', value)
 
       try {
-        const result = await axios({
-          method: 'put',
-          url: `http://localhost:8000/todo/${id}`,
-          data: {
+        // const result = await axios({
+        //   method: 'put',
+        //   url: `http://localhost:8000/todo/${id}`,
+        //   data: {
+        //     text: value
+        //   }
+
+        // })
+
+        const variables = {
+          input: {
+            id: id,
             text: value
           }
+        }
 
-        })
-        if (result.status === 200) {
+        const response = await fetch(
+          'http://localhost:8000/graphql', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query: putTaskMutation, variables })
+          })
+        const result = await response.json()
+
+        if (response.status === 200) {
           setEditId(undefined)
           getTasks()
         }
@@ -61,11 +80,22 @@ const Tasks = (props: TasksPropsInterface) => {
   const handleDelete = useCallback(
     async (id) => {
       try {
-        const result = await axios({
-          method: 'delete',
-          url: `http://localhost:8000/todo/${id}`
-        })
-        if (result.status === 200) {
+        // const result = await axios({
+        //   method: 'delete',
+        //   url: `http://localhost:8000/todo/${id}`
+        // })
+
+        const response = await fetch(
+          'http://localhost:8000/graphql', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query: deleteTaskMutation, variables: { id } })
+          })
+        const result = await response.json()
+
+        if (response.status === 200) {
           getTasks()
         }
         return result

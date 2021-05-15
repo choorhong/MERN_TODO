@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
+
+import { getTasksQuery } from '../graphql/query'
 
 import InputForm from '../components/InputForm'
 import Tasks from '../components/Tasks'
@@ -18,15 +20,25 @@ const Dashboard = () => {
   const getTasks = useCallback(
     async () => {
       try {
-        const result = await axios({
-          method: 'get',
-          url: 'http://localhost:8000',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        setTasks(result.data.tasks)
-        console.log('result', result)
+        // const result = await axios({
+        //   method: 'get',
+        //   url: 'http://localhost:8000',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   }
+        // })
+        // setTasks(result.data.tasks)
+
+        const response = await fetch(
+          'http://localhost:8000/graphql', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query: getTasksQuery })
+          })
+        const result = await response.json()
+        setTasks(result.data.getTasks)
       } catch (error) {
         console.log('error', error)
       }
