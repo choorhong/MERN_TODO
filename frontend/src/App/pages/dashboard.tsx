@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 // import axios from 'axios'
+import { print } from 'graphql/language/printer'
 
 import { getTasksQuery } from '../graphql/query'
 
@@ -28,14 +29,14 @@ const Dashboard = () => {
         //   }
         // })
         // setTasks(result.data.tasks)
-
+        const parsedGetTaskQuery = print(getTasksQuery)
         const response = await fetch(
           'http://localhost:8000/graphql', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ query: getTasksQuery })
+            body: JSON.stringify({ query: parsedGetTaskQuery })
           })
         const result = await response.json()
         setTasks(result.data.getTasks)
