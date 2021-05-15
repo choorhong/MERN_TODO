@@ -1,6 +1,10 @@
 import { buildSchema } from 'graphql'
 
 const graphqlSchema = buildSchema(`
+    input PostTaskInput {
+        text: String
+    }
+
     input PutTaskInput {
         id: String
         text: String
@@ -12,6 +16,11 @@ const graphqlSchema = buildSchema(`
         creator: String
         updatedAt: String
         createdAt: String
+    }
+
+    type PostTaskResult {
+        message: String
+        tasks: [Task]
     }
 
     type PutTaskResult {
@@ -30,6 +39,7 @@ const graphqlSchema = buildSchema(`
     }
 
     type RootMutation {
+        postTask(input: PostTaskInput!): PostTaskResult
         putTask(input: PutTaskInput): PutTaskResult
         deleteTask(id: String): DeleteTaskResult
     }

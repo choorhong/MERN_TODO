@@ -5,7 +5,7 @@ import Task from '../models/todo'
 
 interface IInputTask {
     input: {
-        id: string;
+        id?: string;
         text: string;
     }
 }
@@ -19,9 +19,22 @@ const graphqlResolvers = {
         return tasks
     },
 
+    postTask: async (args: IInputTask, req: Request) => {
+        const { input } = args
+
+        const content = new Task({
+            text: input.text,
+            creator: new mongoose.mongo.ObjectID('6093e6a872228b2dc190b595')
+        })
+        const result = await content.save()
+        return {
+            message: 'Task created successfully', 
+            task: result
+        }
+    },
+    
     putTask: async (args: IInputTask, req: Request) => {
         const { input } = args
-        // console.log(`input`, input)
         const result = await Task.findByIdAndUpdate(input.id, { text: input.text }, { new: true })
         const tasks = await Task.find({})
         return {
