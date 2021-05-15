@@ -1,8 +1,12 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
+import { graphqlHTTP } from 'express-graphql'
 
 import cors from './middlewares/cors'
+import graphqlSchema from './graphql/schema'
+import graphqlResolvers from './graphql/resolvers'
+
 import todoRoutes from './routes/todos'
 import User from './models/user'
 
@@ -12,9 +16,16 @@ dotenv.config()
 const app = express()
 
 app.use(cors);
-  
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+
+app.use('/graphql', 
+    graphqlHTTP({
+        schema: graphqlSchema,
+        rootValue: graphqlResolvers,
+        graphiql: true,
+    })
+)
 
 app.use(todoRoutes)
 
