@@ -52,7 +52,7 @@ const InputForm = (props: InputFormInterface) => {
 
   return (
     <Form
-      style={{ display: 'flex', justifyContent: 'space-around', paddingTop: '3%' }}
+      style={{ display: 'flex', justifyContent: 'space-between' }}
       form={form}
       name='control-hooks'
       onFinish={handleSubmit}

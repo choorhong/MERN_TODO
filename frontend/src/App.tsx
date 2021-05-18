@@ -10,10 +10,7 @@ function App () {
   return (
     <BrowserRouter>
       <ContextProvider>
-        <NavBar />
-        <div
-          style={{ padding: '5% 5%' }}
-        >
+        <NavBar>
           <Switch>
             <Route path='/setting'>
               <Setting />
@@ -22,8 +19,9 @@ function App () {
               <Dashboard />
             </Route>
           </Switch>
-        </div>
+        </NavBar>
       </ContextProvider>
+
     </BrowserRouter>
   )
 }

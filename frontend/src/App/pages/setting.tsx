@@ -25,7 +25,7 @@ const Setting = () => {
 
   const handleSave = async () => {
     const values = form.getFieldsValue()
-    console.log(values, context)
+    // console.log(values, context)
     setContext(c => {
       return {
         ...c,
@@ -38,7 +38,6 @@ const Setting = () => {
     <>
       <Form
         {...layout}
-        style={{ paddingTop: '3%' }}
         form={form}
         name='control-hooks'
         onFinish={handleSave}

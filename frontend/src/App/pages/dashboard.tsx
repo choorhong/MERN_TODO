@@ -29,6 +29,8 @@ const Dashboard = () => {
         //   }
         // })
         // setTasks(result.data.tasks)
+
+        // Converts an AST (Abstract Syntax Tree) into a string
         const parsedGetTaskQuery = print(getTasksQuery)
         const response = await fetch(
           'http://localhost:8000/graphql', {
@@ -37,7 +39,8 @@ const Dashboard = () => {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({ query: parsedGetTaskQuery })
-          })
+          }
+        )
         const result = await response.json()
         setTasks(result.data.getTasks)
       } catch (error) {
