@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { DashboardOutlined, UserOutlined, SettingOutlined, LoginOutlined } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const { Header, Content } = Layout
 
@@ -11,9 +12,9 @@ export interface NavBarProps {
   children: React.ReactNode
 }
 
-const NavBar = (props: NavBarProps) => {
+const NavBar = React.memo((props: NavBarProps) => {
   const { pathname } = useLocation()
-
+  const { logout } = useAuth0()
   const [selectedKey, setSelectedKey] = useState('home')
 
   useEffect(() => {
@@ -22,6 +23,10 @@ const NavBar = (props: NavBarProps) => {
 
     setSelectedKey(key)
   }, [pathname])
+
+  const handleLogout = useCallback(() => {
+    logout()
+  }, [logout])
 
   return (
     <>
@@ -53,7 +58,7 @@ const NavBar = (props: NavBarProps) => {
             <Menu.Item key='setting' icon={<SettingOutlined />}>
               <Link to='/setting'>Setting</Link>
             </Menu.Item>
-            <Menu.Item key='logout' icon={<LoginOutlined />}>
+            <Menu.Item key='logout' icon={<LoginOutlined />} onClick={() => handleLogout()}>
               Logout
             </Menu.Item>
           </SubMenu>
@@ -64,6 +69,6 @@ const NavBar = (props: NavBarProps) => {
       </Content>
     </>
   )
-}
+})
 
 export default NavBar

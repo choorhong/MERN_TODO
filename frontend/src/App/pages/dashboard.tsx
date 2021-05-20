@@ -4,8 +4,8 @@ import { print } from 'graphql/language/printer'
 
 import { getTasksQuery } from '../graphql/query'
 
-import InputForm from '../components/InputForm'
-import Tasks from '../components/Tasks'
+import InputForm from '../components/Dashboard/InputForm'
+import Tasks from '../components/Dashboard/Tasks'
 
 type TasksInterface = [{
         _id: string;
@@ -58,7 +58,6 @@ const Dashboard = () => {
     <>
       <InputForm getTasks={getTasks} />
       <Tasks dataSource={tasks} getTasks={getTasks} />
-
     </>
   )
 }

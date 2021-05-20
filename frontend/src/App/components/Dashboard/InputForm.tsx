@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 import { Form, Input, Button } from 'antd'
-import { postTaskMutation } from '../graphql/mutation'
+import { postTaskMutation } from '../../graphql/mutation'
 
 interface InputFormInterface {
     getTasks: () => {}

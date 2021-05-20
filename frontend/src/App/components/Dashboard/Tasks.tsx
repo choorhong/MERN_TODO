@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useContext } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 import { Form, List, Button, Input } from 'antd'
 import { EditOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
-import { Context } from '../hooks/context'
-import { putTaskMutation, deleteTaskMutation } from '../graphql/mutation'
+import { Context } from '../../hooks/context'
+import { putTaskMutation, deleteTaskMutation } from '../../graphql/mutation'
 
 interface TasksPropsInterface {
     dataSource: [{
@@ -113,7 +113,7 @@ const Tasks = (props: TasksPropsInterface) => {
         onChange: page => {
           console.log(page)
         },
-        pageSize: context.numOfItemsToBeShown
+        pageSize: context.numOfItemsToBeShown || 5
       }}
       dataSource={dataSource}
       renderItem={item => {
