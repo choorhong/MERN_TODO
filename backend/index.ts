@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { ErrorRequestHandler }  from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import { graphqlHTTP } from 'express-graphql'
@@ -9,6 +9,10 @@ import graphqlResolvers from './graphql/resolvers'
 
 import todoRoutes from './routes/todos'
 import User from './models/user'
+
+const handleError: ErrorRequestHandler = (err, req, res, next) => {
+    res.status(500).json({ message: err.message, statusCode: err.statusCode })
+}
 
 //Initialize environmental variables
 dotenv.config()
@@ -28,6 +32,12 @@ app.use('/graphql',
 )
 
 app.use(todoRoutes)
+
+app.use(handleError)
+
+// app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+//     res.status(500).json({ message: error.message })
+// })
 
 mongoose.connect(process.env.MONGO_URI!)
     .then(() => {
