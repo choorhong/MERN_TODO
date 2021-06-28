@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler }  from 'express'
+import express, { ErrorRequestHandler } from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import { graphqlHTTP } from 'express-graphql'
@@ -11,38 +11,44 @@ import todoRoutes from './routes/todos'
 import User from './models/user'
 
 const handleError: ErrorRequestHandler = (err, req, res, next) => {
-    res.status(500).json({ message: err.message, statusCode: err.statusCode })
+  res.status(500).json({ message: err.message, statusCode: err.statusCode })
 }
 
-//Initialize environmental variables
+// Initialize environmental variables
 dotenv.config()
+const { MONGO_URI, PORT } = process.env
 
+// Initialize app
 const app = express()
 
-app.use(cors);
+// Configure app
+app.use(cors)
 app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 
-app.use('/graphql', 
-    graphqlHTTP({
-        schema: graphqlSchema,
-        rootValue: graphqlResolvers,
-        graphiql: true,
-    })
+// Configure Grapqhql
+app.use('/graphql',
+  graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: graphqlResolvers,
+    graphiql: true
+  })
 )
 
+// Configure REST API routes
 app.use(todoRoutes)
 
+// Configure Express fallback error handler
 app.use(handleError)
-
 // app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 //     res.status(500).json({ message: error.message })
 // })
 
-mongoose.connect(process.env.MONGO_URI!)
-    .then(() => {
-        app.listen(8000)
-    })
-    .catch(err => {
-        console.log(`Mongoose error: `, err.message)
-    })
+// Set up database & server
+mongoose.connect(MONGO_URI!)
+  .then(() => {
+    app.listen(PORT)
+  })
+  .catch(err => {
+    console.log('Mongoose error: ', err.message)
+  })

@@ -20,7 +20,7 @@ export const createTask: RequestHandler = async (req, res, next) => {
   }
 }
 
-export const updateTask: RequestHandler<{todoId: string}> = async (req, res, next) => {
+export const updateTask: RequestHandler<{todoId: string}, Record<string, any>, {text: string}> = async (req, res, next) => {
   try {
     const result = await Task.findByIdAndUpdate(req.params.todoId, { text: req.body.text }, { new: true })
     res.status(200).json({ message: 'Task updated successfully', task: result })
