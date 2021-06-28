@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const userSchema = new Schema({
   email: {
@@ -24,6 +24,6 @@ const userSchema = new Schema({
       ref: 'Task'
     }
   ]
-});
+})
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema)
