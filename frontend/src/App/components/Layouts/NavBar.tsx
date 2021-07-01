@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { DashboardOutlined, UserOutlined, SettingOutlined, LoginOutlined } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
-import { useAuth0 } from '@auth0/auth0-react'
+// import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth } from '../../hooks/auth-context'
 
 const { Header, Content } = Layout
 
@@ -14,7 +15,8 @@ export interface NavBarProps {
 
 const NavBar = React.memo((props: NavBarProps) => {
   const { pathname } = useLocation()
-  const { logout } = useAuth0()
+  // const { logout } = useAuth0()
+  const { logout } = useAuth()
   const [selectedKey, setSelectedKey] = useState('home')
 
   useEffect(() => {
