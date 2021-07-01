@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import { Context } from '../hooks/context'
+import { SettingContext } from '../hooks/setting-context'
 import { Form, Button, InputNumber } from 'antd'
+import NavBar from '../components/Layouts/NavBar'
 
 const layout = {
   labelCol: {
@@ -19,7 +20,7 @@ const tailLayout = {
 }
 
 const Setting = () => {
-  const { context, setContext } = useContext(Context)
+  const { context, setContext } = useContext(SettingContext)
 
   const [form] = Form.useForm()
 
@@ -35,7 +36,7 @@ const Setting = () => {
   }
 
   return (
-    <>
+    <NavBar>
       <Form
         {...layout}
         form={form}
@@ -65,7 +66,7 @@ const Setting = () => {
           </Button>
         </Form.Item>
       </Form>
-    </>
+    </NavBar>
   )
 }
 

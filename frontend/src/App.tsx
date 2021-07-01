@@ -4,11 +4,11 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import './App.css'
-import ContextProvider from './App/hooks/context'
-import LoginButton from './App/pages/login/LoginButton'
+import LoginButton from './App/pages/auth/LoginButton'
+import Login from './App/pages/auth/login'
+import Signup from './App/pages/auth/signup'
 import Dashboard from './App/pages/dashboard'
 import Setting from './App/pages/setting'
-import NavBar from './App/components/Layouts/NavBar'
 
 function App () {
   const { isAuthenticated, isLoading } = useAuth0()
@@ -25,28 +25,26 @@ function App () {
 
   return (
     <BrowserRouter>
+      <Switch>
 
-      <Route path='/login'>
-        <LoginButton />
-      </Route>
+        <Route path='/auth/login'>
+          <Login />
+          {/* <LoginButton /> */}
+        </Route>
 
-      <Route>
-        <ContextProvider>
-          <NavBar>
-            <Switch>
+        <Route path='/auth/signup'>
+          <Signup />
+        </Route>
 
-              <Route path='/setting'>
-                <Setting />
-              </Route>
+        <Route path='/setting'>
+          <Setting />
+        </Route>
 
-              <Route path='/'>
-                <Dashboard />
-              </Route>
+        <Route path='/' exact>
+          <Dashboard />
+        </Route>
 
-            </Switch>
-          </NavBar>
-        </ContextProvider>
-      </Route>
+      </Switch>
     </BrowserRouter>
   )
 }

@@ -7,6 +7,8 @@ interface InputFormInterface {
     getTasks: () => {}
 }
 
+const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
+
 const InputForm = (props: InputFormInterface) => {
   const [form] = Form.useForm()
 
@@ -15,14 +17,14 @@ const InputForm = (props: InputFormInterface) => {
       try {
         // const result = axios({
         //   method: 'post',
-        //   url: 'http://localhost:8000',
+        //   url: 'http://localhost:8080',
         //   data: {
         //     text: values.task
         //   }
         // })
 
         const response = await fetch(
-          'http://localhost:8000/graphql', {
+          graphqlBaseUrl!, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

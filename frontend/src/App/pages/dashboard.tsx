@@ -7,6 +7,8 @@ import { getTasksQuery } from '../graphql/query'
 import InputForm from '../components/Dashboard/InputForm'
 import Tasks from '../components/Dashboard/Tasks'
 
+import NavBar from '../components/Layouts/NavBar'
+
 type TasksInterface = [{
         _id: string;
         text: string;
@@ -14,6 +16,8 @@ type TasksInterface = [{
         createdAt: string;
         updatedAt: string;
     }]
+
+const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState<TasksInterface | []>([])
@@ -23,7 +27,7 @@ const Dashboard = () => {
       try {
         // const result = await axios({
         //   method: 'get',
-        //   url: 'http://localhost:8000',
+        //   url: 'http://localhost:8080',
         //   headers: {
         //     'Content-Type': 'application/json'
         //   }
@@ -33,7 +37,7 @@ const Dashboard = () => {
         // Converts an AST (Abstract Syntax Tree) into a string
         const parsedGetTaskQuery = print(getTasksQuery)
         const response = await fetch(
-          'http://localhost:8000/graphql', {
+          graphqlBaseUrl!, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -55,10 +59,10 @@ const Dashboard = () => {
   }, [getTasks])
 
   return (
-    <>
+    <NavBar>
       <InputForm getTasks={getTasks} />
       <Tasks dataSource={tasks} getTasks={getTasks} />
-    </>
+    </NavBar>
   )
 }
 

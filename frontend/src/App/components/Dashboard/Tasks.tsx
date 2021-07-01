@@ -3,7 +3,7 @@ import React, { useState, useCallback, useContext } from 'react'
 import { Form, List, Button, Input } from 'antd'
 import { EditOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
-import { Context } from '../../hooks/context'
+import { SettingContext } from '../../hooks/setting-context'
 import { putTaskMutation, deleteTaskMutation } from '../../graphql/mutation'
 
 interface TasksPropsInterface {
@@ -17,10 +17,12 @@ interface TasksPropsInterface {
     getTasks: () => {}
 }
 
+const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
+
 const Tasks = (props: TasksPropsInterface) => {
   const { dataSource, getTasks } = props
 
-  const { context } = useContext(Context)
+  const { context } = useContext(SettingContext)
 
   const [form] = Form.useForm()
   const [editId, setEditId] = useState()
@@ -41,7 +43,7 @@ const Tasks = (props: TasksPropsInterface) => {
       try {
         // const result = await axios({
         //   method: 'put',
-        //   url: `http://localhost:8000/todo/${id}`,
+        //   url: `http://localhost:8080/todo/${id}`,
         //   data: {
         //     text: value
         //   }
@@ -56,7 +58,7 @@ const Tasks = (props: TasksPropsInterface) => {
         }
 
         const response = await fetch(
-          'http://localhost:8000/graphql', {
+          graphqlBaseUrl!, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -82,11 +84,11 @@ const Tasks = (props: TasksPropsInterface) => {
       try {
         // const result = await axios({
         //   method: 'delete',
-        //   url: `http://localhost:8000/todo/${id}`
+        //   url: `http://localhost:8080/todo/${id}`
         // })
 
         const response = await fetch(
-          'http://localhost:8000/graphql', {
+          graphqlBaseUrl!, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

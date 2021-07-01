@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 
-export interface ContextProps {
+export interface SettingContextProps {
   children: React.ReactNode
 }
 
@@ -17,16 +17,16 @@ export const defaultContextValue = {
   numOfItemsToBeShown: 5
 }
 
-export const Context = createContext<IContext>({} as IContext)
+export const SettingContext = createContext<IContext>({} as IContext)
 
-const ContextProvider = (props: ContextProps) => {
+const SettingContextProvider = (props: SettingContextProps) => {
   const [context, setContext] = useState(defaultContextValue)
 
   return (
-    <Context.Provider value={{ context, setContext }}>
+    <SettingContext.Provider value={{ context, setContext }}>
       {props.children}
-    </Context.Provider>
+    </SettingContext.Provider>
   )
 }
 
-export default ContextProvider
+export default SettingContextProvider
