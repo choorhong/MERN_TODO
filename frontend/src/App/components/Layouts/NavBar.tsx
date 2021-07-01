@@ -26,8 +26,12 @@ const NavBar = React.memo((props: NavBarProps) => {
     setSelectedKey(key)
   }, [pathname])
 
-  const handleLogout = useCallback(() => {
-    logout()
+  const handleLogout = useCallback(async () => {
+    try {
+      await logout()
+    } catch (err) {
+      console.log('err', err)
+    }
   }, [logout])
 
   return (

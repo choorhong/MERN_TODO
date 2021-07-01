@@ -1,16 +1,18 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
+
 import { useAuth } from '../../hooks/auth-context'
 
 const Signup = () => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const { signup } = useAuth()
 
   const handleSubmit = async (values: any) => {
-    console.log('Success:', values)
     try {
-      const result = await signup(values.email, values.password)
-      console.log('signup result', result)
+      signup(values.email, values.password)
+      history.push('/')
     } catch (err) {
       console.log('err', err)
     }
