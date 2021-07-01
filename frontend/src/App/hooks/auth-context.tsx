@@ -1,5 +1,5 @@
+import React, { createContext, useContext, useReducer, useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
-import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react'
 import { auth } from '../../firebase'
 
 export interface AuthContextProps {
@@ -56,12 +56,13 @@ export const AuthContext = createContext<AuthContextType>({
 
 const AuthContextProvider = (props: AuthContextProps) => {
   const [state, dispatch] = useReducer(authReducer, authInitialState)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const unsubscribe = auth.onIdTokenChanged(
       async (user) => {
-        console.log('OUT--OUT--OUT')
         if (!user) {
+          console.log('OUT--OUT--OUT')
           dispatch({
             type: 'LOGOUT'
           })
@@ -75,13 +76,14 @@ const AuthContextProvider = (props: AuthContextProps) => {
               authorization: token
             }
           })
-          console.log('result----result', token)
+          console.log('result----result', result)
           dispatch({
             type: 'LOGIN',
             payload: result.data,
             token: token
           })
         }
+        setIsLoading(false)
       })
     return unsubscribe
   }, [])
@@ -95,12 +97,20 @@ const AuthContextProvider = (props: AuthContextProps) => {
   }, [])
 
   const logout = useCallback<() => void> (() => {
-    auth.signOut()
+    return auth.signOut()
   }, [])
+
+  // const resetPassword = useCallback<(email: string) => void> ((email) => {
+  //   const config = {
+  //     url: 'http://localhost:3000/auth/login',
+  //     handleCodeInApp: true
+  //   }
+  //   return auth.sendPasswordResetEmail(email, config)
+  // }, [])
 
   return (
     <AuthContext.Provider value={{ signup, login, logout, isLoggedIn: !!state.token, userId: state.userId, token: state.token }}>
-      {props.children}
+      {!isLoading && props.children}
     </AuthContext.Provider>
   )
 }

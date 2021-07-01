@@ -2,13 +2,13 @@ import React from 'react'
 import { List } from 'antd'
 
 interface TasksInterface {
-    tasks: [{
-        _id: string;
-        text: string;
-        creator: string;
-        updatedAt: string;
-        createdAt: string;
-    }]
+  tasks: [{
+      _id: string;
+      text: string;
+      creator: string;
+      updatedAt: string;
+      createdAt: string;
+  }]
 }
 
 const Task = (props: TasksInterface) => {

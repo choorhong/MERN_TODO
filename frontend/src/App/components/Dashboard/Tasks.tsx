@@ -7,14 +7,14 @@ import { SettingContext } from '../../hooks/setting-context'
 import { putTaskMutation, deleteTaskMutation } from '../../graphql/mutation'
 
 interface TasksPropsInterface {
-    dataSource: [{
-        _id: string;
-        text: string;
-        creator: string;
-        updatedAt: string;
-        createdAt: string;
-    }] | [];
-    getTasks: () => {}
+  dataSource: [{
+    _id: string;
+    text: string;
+    creator: string;
+    updatedAt: string;
+    createdAt: string;
+  }] | [];
+  getTasks: () => {};
 }
 
 const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
@@ -47,7 +47,6 @@ const Tasks = (props: TasksPropsInterface) => {
         //   data: {
         //     text: value
         //   }
-
         // })
 
         const variables = {
