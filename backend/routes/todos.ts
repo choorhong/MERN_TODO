@@ -7,8 +7,8 @@ router.get('/', getTasks)
 
 router.post('/', createTask)
 
-router.put('/todo/:todoId', updateTask)
+router.put('/:todoId', updateTask)
 
-router.delete('/todo/:todoId', deleteTask)
+router.delete('/:todoId', deleteTask)
 
 export default router

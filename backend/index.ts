@@ -8,7 +8,7 @@ import graphqlSchema from './graphql/schema'
 import graphqlResolvers from './graphql/resolvers'
 
 import todoRoutes from './routes/todos'
-import User from './models/user'
+import authRoutes from './routes/auth'
 
 const handleError: ErrorRequestHandler = (err, req, res, next) => {
   res.status(500).json({ message: err.message, statusCode: err.statusCode })
@@ -36,7 +36,8 @@ app.use('/graphql',
 )
 
 // Configure REST API routes
-app.use(todoRoutes)
+app.use('/todo', todoRoutes)
+app.use('/auth', authRoutes)
 
 // Configure Express fallback error handler
 app.use(handleError)
@@ -45,7 +46,7 @@ app.use(handleError)
 // })
 
 // Set up database & server
-mongoose.connect(MONGO_URI!)
+mongoose.connect(MONGO_URI!, { useUnifiedTopology: true })
   .then(() => {
     app.listen(PORT)
   })
