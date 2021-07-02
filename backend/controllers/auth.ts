@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express'
-import admin from '../firebase'
 import User from '../models/user'
 import { omit } from 'lodash'
 
@@ -24,27 +23,6 @@ export const createOrFindUser: RequestHandler = async (req, res, next) => {
       next()
       // return res.status(400).json({ err: 'USER_EXISTED' })
     }
-  } catch (err) {
-    console.log('err', err)
-    return res.status(401).json({ err: 'INVALID_OR_EXPIRED_TOKEN' })
-  }
-}
-
-export const verifyToken: RequestHandler = async (req, res, next) => {
-  try {
-    const accessToken = req.headers.authorization
-    if (!accessToken) throw new Error()
-
-    const firebaseUser = await admin.auth().verifyIdToken(accessToken)
-    if (!firebaseUser) throw new Error()
-
-    res.locals.firebaseUser = {
-      email: firebaseUser.email,
-      name: firebaseUser.name,
-      firebaseUserId: firebaseUser.user_id
-    }
-
-    next()
   } catch (err) {
     console.log('err', err)
     return res.status(401).json({ err: 'INVALID_OR_EXPIRED_TOKEN' })
