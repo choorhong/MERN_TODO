@@ -14,7 +14,7 @@ export const createOrFindUser: RequestHandler = async (req, res, next) => {
       const newUser = await new User({
         email: firebaseUser.email,
         name: firebaseUser.name,
-        firebaseUserId: firebaseUser.user_id
+        firebaseUserId: firebaseUser.firebaseUserId
       }).save()
       const user = omit(newUser, ['tasks', '__v'])
       return res.status(201).json(user)
