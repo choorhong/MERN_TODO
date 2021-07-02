@@ -8,7 +8,6 @@ interface IRouteProps extends RouteProps {
 
 export const PrivateRoute = (props: IRouteProps) => {
   const { isLoggedIn } = useAuth()
-
   const { children, ...rest } = props
 
   return (
@@ -31,14 +30,18 @@ export const PublicRoute = (props: IRouteProps) => {
   const { isLoggedIn } = useAuth()
 
   const { children, ...rest } = props
+  const path = props.location?.state as { from?: { pathname: string | undefined }} | undefined
+  const pathname = path?.from?.pathname
 
+  // If the user signs out or sudden sign out by the system >>
+  // The user will be brought back to the very last page he/she was at prior to being sign out
   return (
     <Route
       {...rest}
       render={(props) => {
         return isLoggedIn
           ? <Redirect to={{
-            pathname: '/',
+            pathname: pathname || '/',
             state: { from: props.location }
           }}
             />
