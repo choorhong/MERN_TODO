@@ -1,24 +1,18 @@
-import React, { useState } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 
 import { useAuth } from '../../hooks/auth-context'
 
-const Login = () => {
-  const history = useHistory()
+const ResetPassword = () => {
   const [form] = Form.useForm()
-  const { login } = useAuth()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { reset } = useAuth()
 
   const handleSubmit = async (values: any) => {
-    setIsLoading(true)
     try {
-      await login(values.email, values.password)
-      setIsLoading(false)
-      history.push('/')
+      reset(values.email)
     } catch (err) {
       console.log('err', err)
-      setIsLoading(false)
     }
   }
 
@@ -54,50 +48,24 @@ const Login = () => {
         </Form.Item>
 
         <Form.Item
-          label='Password'
-          name='password'
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password!'
-            }
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
           wrapperCol={{
             offset: 8,
             span: 8
           }}
         >
-          <Button type='primary' htmlType='submit' loading={isLoading}>
-            Login
+          <Button type='primary' htmlType='submit'>
+            Submit
           </Button>
 
           <Button type='link' style={{ margin: '0 2%' }}>
-            <Link to='/auth/reset-password'>Forgot Password</Link>
+            <Link to='/auth/login'>Back to Login</Link>
           </Button>
 
         </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 8
-          }}
-        >
-          <Button>
-            <Link to='/auth/signup'>Signup</Link>
-          </Button>
-
-        </Form.Item>
-
       </Form>
     </div>
 
   )
 }
 
-export default Login
+export default ResetPassword

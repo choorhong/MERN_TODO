@@ -4,6 +4,7 @@ import { BrowserRouter, Switch } from 'react-router-dom'
 
 import Login from '../pages/auth/login'
 import Signup from '../pages/auth/signup'
+import ResetPassword from '../pages/auth/reset-password'
 import Dashboard from '../pages/dashboard'
 import Setting from '../pages/setting'
 
@@ -32,6 +33,10 @@ const AppRouter = () => {
 
         <PublicRoute path='/auth/signup'>
           <Signup />
+        </PublicRoute>
+
+        <PublicRoute path='/auth/reset-password'>
+          <ResetPassword />
         </PublicRoute>
 
         <PrivateRoute path='/setting'>

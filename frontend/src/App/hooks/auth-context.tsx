@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
+import { Spin } from 'antd'
+
 import { auth } from '../../firebase'
 
 export interface AuthContextProps {
@@ -13,6 +15,7 @@ type AuthContextType = {
   login: (email: string, password: string) => void;
   signup: (email: string, password: string) => void;
   logout: () => void;
+  reset: (email: string) => void;
 }
 
 export interface IAuthState {
@@ -51,7 +54,8 @@ export const AuthContext = createContext<AuthContextType>({
   userId: undefined,
   login: () => {},
   signup: () => {},
-  logout: () => {}
+  logout: () => {},
+  reset: () => {}
 })
 
 const AuthContextProvider = (props: AuthContextProps) => {
@@ -100,17 +104,25 @@ const AuthContextProvider = (props: AuthContextProps) => {
     return auth.signOut()
   }, [])
 
-  // const resetPassword = useCallback<(email: string) => void> ((email) => {
-  //   const config = {
-  //     url: 'http://localhost:3000/auth/login',
-  //     handleCodeInApp: true
-  //   }
-  //   return auth.sendPasswordResetEmail(email, config)
-  // }, [])
+  const resetPassword = useCallback<(email: string) => void> ((email) => {
+    const config = {
+      url: 'http://localhost:3000/auth/login',
+      handleCodeInApp: true
+    }
+    return auth.sendPasswordResetEmail(email, config)
+  }, [])
+  console.log('re-rendering auth-context provider')
 
+  if (isLoading) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Spin size='large' />
+      </div>
+    )
+  }
   return (
-    <AuthContext.Provider value={{ signup, login, logout, isLoggedIn: !!state.token, userId: state.userId, token: state.token }}>
-      {!isLoading && props.children}
+    <AuthContext.Provider value={{ signup, login, logout, isLoggedIn: !!state.token, userId: state.userId, token: state.token, reset: resetPassword }}>
+      {props.children}
     </AuthContext.Provider>
   )
 }

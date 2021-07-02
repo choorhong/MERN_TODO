@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 
 import { useAuth } from '../../hooks/auth-context'
@@ -93,6 +93,11 @@ const Signup = () => {
           <Button type='primary' htmlType='submit'>
             Signup
           </Button>
+
+          <Button type='link' style={{ margin: '0 2%' }}>
+            <Link to='/auth/login'>Login</Link>
+          </Button>
+
         </Form.Item>
       </Form>
     </div>
