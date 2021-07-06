@@ -1,20 +1,23 @@
-import React from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 
 import { useAuth } from '../../hooks/auth-context'
 
 const Signup = () => {
-  const history = useHistory()
   const [form] = Form.useForm()
   const { signup } = useAuth()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSubmit = async (values: any) => {
+    setIsLoading(true)
+
     try {
-      signup(values.email, values.password)
-      history.push('/')
+      await signup(values.email, values.password)
+      setIsLoading(false)
     } catch (err) {
       console.log('err', err)
+      setIsLoading(false)
     }
   }
 
@@ -90,7 +93,7 @@ const Signup = () => {
             span: 8
           }}
         >
-          <Button type='primary' htmlType='submit'>
+          <Button type='primary' htmlType='submit' loading={isLoading}>
             Signup
           </Button>
 

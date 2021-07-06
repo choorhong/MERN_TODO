@@ -11,6 +11,7 @@ const Login = () => {
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
+
     try {
       await login(values.email, values.password)
       setIsLoading(false)
