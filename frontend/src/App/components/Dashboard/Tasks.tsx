@@ -40,7 +40,7 @@ const Tasks = (props: TasksPropsInterface) => {
   const handleUpdate = useCallback(
     async (id: string) => {
       const value = form.getFieldValue('task')
-      console.log('value', value)
+      // console.log('value', value)
 
       try {
         // const result = await axios({

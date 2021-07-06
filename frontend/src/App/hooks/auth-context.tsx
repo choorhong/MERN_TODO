@@ -66,7 +66,6 @@ const AuthContextProvider = (props: AuthContextProps) => {
     const unsubscribe = auth.onIdTokenChanged(
       async (user) => {
         if (!user) {
-          console.log('OUT--OUT--OUT')
           dispatch({
             type: 'LOGOUT'
           })
@@ -80,7 +79,6 @@ const AuthContextProvider = (props: AuthContextProps) => {
               authorization: token
             }
           })
-          console.log('result----result', result)
           dispatch({
             type: 'LOGIN',
             payload: result.data,
@@ -111,7 +109,7 @@ const AuthContextProvider = (props: AuthContextProps) => {
     }
     return auth.sendPasswordResetEmail(email, config)
   }, [])
-  console.log('re-rendering auth-context provider')
+  // console.log('re-rendering auth-context provider')
 
   if (isLoading) {
     return (

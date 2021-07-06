@@ -28,6 +28,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Configure Grapqhql
+// Signup, login, reset-password will not use graphql as verifyToken will fail
 app.use(
   '/graphql',
   verifyToken,
