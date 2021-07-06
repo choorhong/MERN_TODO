@@ -15,8 +15,8 @@ export const createOrFindUser: RequestHandler = async (req, res, next) => {
         name: firebaseUser.name,
         firebaseUserId: firebaseUser.firebaseUserId
       }).save()
-      const user = omit(newUser, ['tasks', '__v'])
-      return res.status(201).json(user)
+      const modNewUser = omit(newUser, ['tasks', '__v'])
+      return res.status(201).json(modNewUser)
     } else {
       // User exists > next (Eg: when user refreshes the page)
       res.status(200).json(user)

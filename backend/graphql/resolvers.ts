@@ -1,13 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
 
-import mongoose from 'mongoose'
 import Task from '../models/todo'
+import User from '../models/user'
 
 interface IInputTask {
   input: {
     id?: string
     text: string
   }
+}
+
+interface IContext {
+  req: Request;
+  res: Response;
+  next: NextFunction;
 }
 
 const graphqlResolvers = {
@@ -18,17 +24,27 @@ const graphqlResolvers = {
     return tasks
   },
 
-  postTask: async (args: IInputTask, req: Request) => {
+  postTask: async (args: IInputTask, context: IContext) => {
     const { input } = args
 
-    const content = new Task({
-      text: input.text,
-      creator: new mongoose.mongo.ObjectID('6093e6a872228b2dc190b595')
-    })
-    const result = await content.save()
-    return {
-      message: 'Task created successfully',
-      task: result
+    const { firebaseUser } = context.res.locals
+    try {
+      const user = await User.findOne({ email: firebaseUser.email }, { __v: 0 })
+      if (!user) throw new Error('NO_USER_FOUND')
+
+      const content = new Task({
+        text: input.text,
+        creator: user._id
+      })
+      const result = await content.save()
+      user.tasks.push(result)
+      await user.save()
+      return {
+        message: 'Task created successfully',
+        task: result
+      }
+    } catch (error) {
+      context.next(error)
     }
   },
 
@@ -43,11 +59,23 @@ const graphqlResolvers = {
     }
   },
 
-  deleteTask: async (args: { id: string }, req: Request) => {
+  deleteTask: async (args: { id: string }, context: IContext) => {
     const todoId = args.id
-    const tasks = await Task.findByIdAndRemove(todoId)
-    return {
-      message: 'Task deleted successfully'
+    const { firebaseUser } = context.res.locals
+
+    try {
+      const user = await User.findOne({ email: firebaseUser.email }, { __v: 0 })
+      if (!user) throw new Error('NO_USER_FOUND')
+
+      await Task.findByIdAndRemove(todoId)
+      user.tasks.pull(todoId)
+      await user.save()
+
+      return {
+        message: 'Task deleted successfully'
+      }
+    } catch (error) {
+      context.next(error)
     }
   }
 

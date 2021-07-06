@@ -6,6 +6,7 @@ import { graphqlHTTP } from 'express-graphql'
 import cors from './middlewares/cors'
 import graphqlSchema from './graphql/schema'
 import graphqlResolvers from './graphql/resolvers'
+import { verifyToken } from './middlewares/auth'
 
 import todoRoutes from './routes/todos'
 import authRoutes from './routes/auth'
@@ -27,12 +28,20 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Configure Grapqhql
-app.use('/graphql',
-  graphqlHTTP({
-    schema: graphqlSchema,
-    rootValue: graphqlResolvers,
-    graphiql: true
-  })
+app.use(
+  '/graphql',
+  verifyToken,
+  (req, res, next) =>
+    graphqlHTTP({
+      schema: graphqlSchema,
+      rootValue: graphqlResolvers,
+      graphiql: true,
+      context: {
+        req,
+        res,
+        next
+      }
+    })(req, res)
 )
 
 // Configure REST API routes
@@ -46,7 +55,7 @@ app.use(handleError)
 // })
 
 // Set up database & server
-mongoose.connect(MONGO_URI!, { useUnifiedTopology: true })
+mongoose.connect(MONGO_URI!, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => {
     app.listen(PORT)
   })
