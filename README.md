@@ -1,9 +1,10 @@
-A Simple To-Do-App created with MERN 
+# A Simple To-Do-App created with MERN 
 
-(i) MongoDB, Mongoose
-(ii) Express
-(iii) React
-(iv) Node
-(v) GraphQL
+- MongoDB, Mongoose
+- Express
+- React
+- Node
+- GraphQL
+- Typescript
 
 More functionalities to be added. Stay tuned! :)
