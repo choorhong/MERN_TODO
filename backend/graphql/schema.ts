@@ -20,7 +20,7 @@ const graphqlSchema = buildSchema(`
 
     type PostTaskResult {
         message: String
-        tasks: [Task]
+        task: Task
     }
 
     type PutTaskResult {

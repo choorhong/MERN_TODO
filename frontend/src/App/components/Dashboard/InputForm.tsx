@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 // import axios from 'axios'
 import { Form, Input, Button } from 'antd'
 import { postTaskMutation } from '../../graphql/mutation'
+import { useAuth } from '../../hooks/auth-context'
 
 interface InputFormInterface {
     getTasks: () => {}
@@ -11,6 +12,7 @@ const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
 
 const InputForm = (props: InputFormInterface) => {
   const [form] = Form.useForm()
+  const { token } = useAuth()
 
   const postTask = useCallback(
     async (values) => {
@@ -27,7 +29,8 @@ const InputForm = (props: InputFormInterface) => {
           graphqlBaseUrl!, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              authorization: token!
             },
             body: JSON.stringify({ query: postTaskMutation, variables: { input: { text: values.task } } })
           })
@@ -37,7 +40,7 @@ const InputForm = (props: InputFormInterface) => {
         console.log('error', error)
       }
     },
-    []
+    [token]
   )
 
   const handleSubmit = useCallback(

@@ -8,6 +8,7 @@ import InputForm from '../components/Dashboard/InputForm'
 import Tasks from '../components/Dashboard/Tasks'
 
 import NavBar from '../components/Layouts/NavBar'
+import { useAuth } from '../hooks/auth-context'
 
 type TasksInterface = [{
         _id: string;
@@ -21,6 +22,7 @@ const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState<TasksInterface | []>([])
+  const { token } = useAuth()
 
   const getTasks = useCallback(
     async () => {
@@ -40,7 +42,8 @@ const Dashboard = () => {
           graphqlBaseUrl!, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              authorization: token!
             },
             body: JSON.stringify({ query: parsedGetTaskQuery })
           }
@@ -51,7 +54,7 @@ const Dashboard = () => {
         console.log('error', error)
       }
     },
-    []
+    [token]
   )
 
   useEffect(() => {

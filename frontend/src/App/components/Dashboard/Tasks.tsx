@@ -5,6 +5,7 @@ import { EditOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
 import { SettingContext } from '../../hooks/setting-context'
 import { putTaskMutation, deleteTaskMutation } from '../../graphql/mutation'
+import { useAuth } from '../../hooks/auth-context'
 
 interface TasksPropsInterface {
   dataSource: [{
@@ -23,6 +24,7 @@ const Tasks = (props: TasksPropsInterface) => {
   const { dataSource, getTasks } = props
 
   const { context } = useContext(SettingContext)
+  const { token } = useAuth()
 
   const [form] = Form.useForm()
   const [editId, setEditId] = useState()
@@ -60,7 +62,8 @@ const Tasks = (props: TasksPropsInterface) => {
           graphqlBaseUrl!, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              authorization: token!
             },
             body: JSON.stringify({ query: putTaskMutation, variables })
           })
@@ -75,7 +78,7 @@ const Tasks = (props: TasksPropsInterface) => {
         console.log('error', error)
       }
     },
-    [form, getTasks]
+    [form, getTasks, token]
   )
 
   const handleDelete = useCallback(
@@ -90,7 +93,8 @@ const Tasks = (props: TasksPropsInterface) => {
           graphqlBaseUrl!, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              authorization: token!
             },
             body: JSON.stringify({ query: deleteTaskMutation, variables: { id } })
           })
@@ -104,7 +108,7 @@ const Tasks = (props: TasksPropsInterface) => {
         console.log('error', error)
       }
     },
-    [getTasks]
+    [getTasks, token]
   )
   return (
     <List

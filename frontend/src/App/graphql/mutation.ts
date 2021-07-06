@@ -2,7 +2,7 @@ export const postTaskMutation = `
   mutation postTask ($input: PostTaskInput!) {
     postTask(input: $input) {
       message
-      tasks {
+      task {
         _id
         text
         creator
