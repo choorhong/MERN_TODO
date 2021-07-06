@@ -7,6 +7,7 @@ import { auth } from '../../firebase'
 export interface AuthContextProps {
   children?: React.ReactNode
 }
+const baseUrl = process.env.REACT_APP_BASE_URL
 
 type AuthContextType = {
   isLoggedIn: boolean;
@@ -73,7 +74,7 @@ const AuthContextProvider = (props: AuthContextProps) => {
           const { token } = await user.getIdTokenResult()
           const result = await axios({
             method: 'post',
-            url: 'http://localhost:8080/auth/create-find-user',
+            url: `${baseUrl}/auth/create-find-user`,
             data: {},
             headers: {
               authorization: token

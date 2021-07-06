@@ -18,7 +18,7 @@ type TasksInterface = [{
         updatedAt: string;
     }]
 
-const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
+const graphqlBaseUrl = process.env.REACT_APP_GRAPHQL_BASE_URL
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState<TasksInterface | []>([])

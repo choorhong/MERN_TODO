@@ -8,7 +8,7 @@ interface InputFormInterface {
     getTasks: () => {}
 }
 
-const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
+const graphqlBaseUrl = process.env.REACT_APP_GRAPHQL_BASE_URL
 
 const InputForm = (props: InputFormInterface) => {
   const [form] = Form.useForm()

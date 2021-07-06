@@ -18,7 +18,7 @@ interface TasksPropsInterface {
   getTasks: () => {};
 }
 
-const graphqlBaseUrl = process.env.REACT_APP_BASE_URL
+const graphqlBaseUrl = process.env.REACT_APP_GRAPHQL_BASE_URL
 
 const Tasks = (props: TasksPropsInterface) => {
   const { dataSource, getTasks } = props
