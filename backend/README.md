@@ -5,7 +5,7 @@ Create a .env file in the root directory and placed the following variables in t
 
 ```
 NODE_ENV=local
-PORT=8080
+PORT=8000
 MONGO_URI=mongodb://localhost:27017
 MONGO_DB=mern-todo-local
 JWT_SECRET=<generate your own preferred jwt_secret pr generate one with instruction below>

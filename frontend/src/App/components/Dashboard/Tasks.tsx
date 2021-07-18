@@ -45,7 +45,7 @@ const Tasks = (props: TasksPropsInterface) => {
       try {
         // const result = await axios({
         //   method: 'put',
-        //   url: `http://localhost:8080/todo/${id}`,
+        //   url: `http://localhost:8000/todo/${id}`,
         //   data: {
         //     text: value
         //   }
@@ -86,7 +86,7 @@ const Tasks = (props: TasksPropsInterface) => {
       try {
         // const result = await axios({
         //   method: 'delete',
-        //   url: `http://localhost:8080/todo/${id}`
+        //   url: `http://localhost:8000/todo/${id}`
         // })
 
         const response = await fetch(
