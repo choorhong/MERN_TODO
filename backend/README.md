@@ -1,4 +1,4 @@
-# Getting ßtarted with MERN_TODO_BACKEND
+# Getting Started with MERN_TODO_BACKEND
 
 ## Setup env file
 Create a .env file in the root directory and placed the following variables in the file.
@@ -8,7 +8,7 @@ NODE_ENV=local
 PORT=8000
 MONGO_URI=mongodb://localhost:27017
 MONGO_DB=mern-todo-local
-JWT_SECRET=<generate your own preferred jwt_secret pr generate one with instruction below>
+JWT_SECRET=<generate your own preferred jwt_secret or generate one with the instruction below>
 FRONTEND_BASE_URL=http://localhost:3000
 ```
 You can generate a JWT_SECRET by running `openssl rand -base64 172 | tr -d '\n'` in the command line.
