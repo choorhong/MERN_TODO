@@ -2,6 +2,29 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Environmental Variables Setup
+Create a .env file in the root directory and placed the following variables in the file.
+```
+PORT=3000
+REACT_APP_BASE_URL=http://localhost:8000
+REACT_APP_GRAPHQL_BASE_URL=http://localhost:8000/graphql
+```
+
+1. Login or register a [firebase](https://firebase.google.com/)
+2. Add a project or choose an existing project
+3. Click on the `setting icon`:gear: next to `Project Overview` > `Project settings` > `General` > `SDK setup and configuration` > `Config` > copy the `firebaseConfig` and insert the value corresponds with the key below (you may not have databaseURL if no db created)
+
+```
+REACT_APP_API_KEY=
+REACT_APP_AUTH_DOMAIN=
+REACT_APP_DATABASE_URL=
+REACT_APP_PROJECT_ID=
+REACT_APP_STORAGE_BUCKET=
+REACT_APP_MESSAGE_SENDER_ID=
+REACT_APP_APP_ID=
+REACT_APP_MEASUREMENT_ID=
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

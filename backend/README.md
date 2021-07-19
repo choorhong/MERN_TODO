@@ -17,7 +17,7 @@ You can generate a JWT_SECRET by running `openssl rand -base64 172 | tr -d '\n'`
 1. Login or register a [firebase](https://firebase.google.com/)
 2. Add a project or choose an existing project
 3. Retrieve the `database url` by creating or choosing an existing firebase `Realtime Database` > replace the `databaseURL` in `/firebase/index.ts`
-3. Click on the `setting icon`:gear: next to `Project Overview` > `Project settings` > `Service accounts` > `Node.js` > `Generate new private key` > place the downloaded `serviceAccountKey.json` file in  `/firebase` folder
+4. Click on the `setting icon`:gear: next to `Project Overview` > `Project settings` > `Service accounts` > `Node.js` > `Generate new private key` > place the downloaded `serviceAccountKey.json` file in  `/firebase` folder
 
 ## Run project
 1. After setting up your env variables, run `yarn install`. Make sure you are in the root directory of the project.
